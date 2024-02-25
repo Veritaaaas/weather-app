@@ -1,0 +1,1 @@
+!async function(){const a=await fetch("http://api.weatherapi.com/v1/forecast.json?key=a21fddacf001434b931115221242502&q=Paris/&days=7",{mode:"cors"}),o=await a.json();console.log(o)}();
