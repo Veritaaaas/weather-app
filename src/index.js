@@ -1,6 +1,36 @@
 import './style.css';
 
-let city = "New York";
+let city = "Manila";
+
+const weatherDataElement = document.querySelector('.weather-data');
+
+// When the weather data is loaded
+
+
+function generateWeatherDataDOM(current_day) {
+    const error_message = document.querySelector(".error");
+
+    const info = document.querySelector(".info");
+    const temperature_data = document.querySelector(".temp-value");
+    const temperature_symbol = document.querySelector(".temp-type");
+    const temp_feels_like = document.querySelector(".temp-feels-like");
+    const temp_type_feels_like = document.querySelector(".temp-type-feels-like");
+    const humidity = document.querySelector(".humidity");
+    const wind = document.querySelector(".wind")
+
+
+    info.firstElementChild.textContent = current_day.condition;
+    info.children[1].textContent = current_day.location.city + ", " + current_day.location.country; 
+    temperature_data.textContent = current_day.temperature.celsius;
+    temperature_symbol.textContent = "°C";
+    temp_feels_like.textContent = "FEELS LIKE: " + current_day.feelsLike.celsius;
+    temp_type_feels_like.textContent = "°C";
+    humidity.textContent = "WIND: " + current_day.humidity + " kph";
+    wind.textContent = "HUMIDITY: " + current_day.wind.kph + "%";
+
+    error_message.style.display = "none";
+    weatherDataElement.classList.add('loaded');
+}
 
 async function getWeatherData(city) {
     const apiKey = 'a21fddacf001434b931115221242502';
@@ -34,35 +64,14 @@ async function getWeatherData(city) {
             },
             humidity: weather_data.current.humidity,
             rain_chance: weather_data.forecast.forecastday[0].day.daily_chance_of_rain
-
         }
 
-        const info = document.querySelector(".info");
-        const temperature_data = document.querySelector(".temp-value");
-        const temperature_symbol = document.querySelector(".temp-type");
-        const temp_feels_like = document.querySelector(".temp-feels-like");
-        const temp_type_feels_like = document.querySelector(".temp-type-feels-like");
-        const humidity = document.querySelector(".humidity");
-        const wind = document.querySelector(".wind")
-
-
-        info.firstElementChild.textContent = current_day.condition;
-        info.children[1].textContent = current_day.location.city + ", " + current_day.location.country; 
-        temperature_data.textContent = current_day.temperature.celsius;
-        temperature_symbol.textContent = "°C";
-        temp_feels_like.textContent = "FEELS LIKE: " + current_day.feelsLike.celsius;
-        temp_type_feels_like.textContent = "°C";
-        humidity.textContent = "WIND: " + current_day.humidity + " kph";
-        wind.textContent = "HUMIDITY: " + current_day.wind.kph + "%";
-
-        error_message.style.display = "none";
+        generateWeatherDataDOM(current_day);
 
     } catch(error) {
         error_message.style.display = "flex";
     }
     
-    
-
 }
 
 const search = document.querySelector("#searchForm");
@@ -70,6 +79,7 @@ const search = document.querySelector("#searchForm");
 search.addEventListener("submit", function() {
     event.preventDefault();
     city = document.querySelector("#search").value;
+    weatherDataElement.classList.remove('loaded');
     getWeatherData(city);
 });
 

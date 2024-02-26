@@ -60,6 +60,12 @@ body {
     margin: 1rem;
     padding: 1rem;
     width: fit-content;
+    transform: scale(0);
+    transition: transform 1s ease-in-out;
+}
+
+.weather-data.loaded {
+    transform: scale(1);
 }
 
 .info {
@@ -69,6 +75,7 @@ body {
     margin-bottom: 1rem;
     margin-top: 6rem;
     width: 100%;
+    transition: all 0.5s ease;
 }
 
 .weather-data h3,
@@ -91,9 +98,13 @@ body {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1.5fr;
+    grid-template-areas: 
+    "temperature additional-info"
+    "button button";
 }
 
 .temperature {
+    grid-area: temperature;
     display: flex;
     padding-right: 1rem;
     position: relative;
@@ -112,6 +123,7 @@ body {
 }
 
 .additional-info {
+    grid-area: additional-info;
     padding-left: 1rem;
     display: flex;
     flex-direction: column;
@@ -134,4 +146,27 @@ body {
     position: absolute;
     top: 0;
     right: 1%;
+}
+
+.forecast-option {
+    grid-area: button;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    background-color: rgb(245, 149, 245, 0.3);
+    border: none;
+    padding: 0.4rem;
+    color: white;
+    font-weight: bolder;
+    font-size: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgb(245, 149, 245, 0.5);
 }
