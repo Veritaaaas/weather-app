@@ -24,6 +24,7 @@ body {
 .input-bar {
     width: 100%;
     display: flex;
+    flex-direction: column;
     margin-left: 8rem;
     margin-top: 2rem;
 }
@@ -44,20 +45,30 @@ body {
     font-size: 1rem;
 }
 
+.error {
+    color: red;
+    font-size: 1rem;
+    margin-top: 1rem;
+    display: none;
+}
+
 .weather-data {
     display: flex;
     flex-direction: column;
+    align-items: center;
     height: 100%;
     margin: 1rem;
+    padding: 1rem;
+    width: fit-content;
 }
 
 .info {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: start;
     margin-bottom: 1rem;
-    margin-top: 8rem;
+    margin-top: 6rem;
+    width: 100%;
 }
 
 .weather-data h3,
@@ -66,35 +77,61 @@ body {
 }
 
 .weather-data h3 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 300;
 }
 
 .weather-data h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
+    overflow-wrap: break-word;
     font-weight: 600;
 }
 
 .details {
+    width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1.5fr;
 }
 
 .temperature {
     display: flex;
+    padding-right: 1rem;
+    position: relative;
     align-items: center;
     justify-content: center;
     font-size: 6rem;
     border-right: 2px solid white;
 }
 
+.temp-type {
+    font-size: 1.3rem;
+    font-weight: 600;
+    position: absolute;
+    top: 0;
+    right: 2%;
+}
+
 .additional-info {
     padding-left: 1rem;
     display: flex;
     flex-direction: column;
-    font-size: 1rem;
+    font-size: 1.3rem;
 }
 
 .additional-info div {
-    margin: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.feels-like {
+    display: flex;
+    position: relative;
+    padding-right: 1rem;
+    width: fit-content;
+}
+
+.temp-type-feels-like {
+    font-size: 0.8rem;
+    position: absolute;
+    top: 0;
+    right: 1%;
 }
