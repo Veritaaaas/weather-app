@@ -3,9 +3,13 @@ import './style.css';
 let city = "Manila";
 
 const weatherDataElement = document.querySelector('.weather-data');
+const search = document.querySelector("#searchForm");
+const see_forecast = document.querySelector("#forecast");
 
-// When the weather data is loaded
-
+function getDayOfWeek(date) {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[date.getDay()];
+}
 
 function generateWeatherDataDOM(current_day) {
     const error_message = document.querySelector(".error");
@@ -30,6 +34,38 @@ function generateWeatherDataDOM(current_day) {
 
     error_message.style.display = "none";
     weatherDataElement.classList.add('loaded');
+}
+
+function generateWeeklyForecast(weekly_forecast) {
+    const forecast_data = document.querySelector(".forecast-data");
+    forecast_data.innerHTML = "";
+
+    for (let i = 0; i < 7; i++) 
+    {
+        const daily_forecast = weekly_forecast[i];
+        const forecast_day = document.createElement("div");
+        const day = document.createElement("div");
+        const day_details = document.createElement("div");
+        const weather_icon = document.createElement("img");
+        const day_temp = document.createElement("div");
+        
+        forecast_day.classList.add("forecast-day");
+        day.classList.add("day");
+        day_details.classList.add("day-details");
+        day_temp.classList.add("day-temp");
+
+        day.textContent = getDayOfWeek(new Date(daily_forecast.date));
+        weather_icon.src = daily_forecast.day.condition.icon;
+        day_temp.textContent = daily_forecast.day.avgtemp_c + "°C";
+
+        day_details.appendChild(weather_icon);
+        day_details.appendChild(day_temp);
+
+        forecast_day.appendChild(day);
+        forecast_day.appendChild(day_details);
+
+        forecast_data.appendChild(forecast_day);
+    }
 }
 
 async function getWeatherData(city) {
@@ -66,6 +102,8 @@ async function getWeatherData(city) {
             rain_chance: weather_data.forecast.forecastday[0].day.daily_chance_of_rain
         }
 
+        const weekly_forecast = weather_data.forecast.forecastday;
+        generateWeeklyForecast(weekly_forecast);
         generateWeatherDataDOM(current_day);
 
     } catch(error) {
@@ -74,13 +112,27 @@ async function getWeatherData(city) {
     
 }
 
-const search = document.querySelector("#searchForm");
 
 search.addEventListener("submit", function() {
     event.preventDefault();
     city = document.querySelector("#search").value;
     weatherDataElement.classList.remove('loaded');
     getWeatherData(city);
+});
+
+see_forecast.addEventListener("click", function() {
+    const forecast_details = document.querySelector(".forecast-details");
+
+    if (forecast_details.style.display === "flex")
+    {
+        forecast_details.style.display = "none";
+        see_forecast.textContent = "See Forecast";
+    }
+    else
+    {
+        forecast_details.style.display = "flex";
+        see_forecast.textContent = "Hide Forecast";
+    }
 });
 
 getWeatherData(city);
