@@ -73,7 +73,7 @@ async function getWeatherData(city) {
     const error_message = document.querySelector(".error");
 
     try {
-        const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}/&days=7`, {mode: 'cors'});
+        const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}/&days=7`, {mode: 'cors'});
 
         const weather_data = await response.json();
         console.log(weather_data)
